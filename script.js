@@ -1,4 +1,3 @@
-// Asegúrate de que el script de Tidio esté cargado correctamente
 window.addEventListener('load', () => {
     // Ocultar el widget de Tidio (si está presente)
     const tidioChat = document.getElementById('tidio-chat');
@@ -6,6 +5,13 @@ window.addEventListener('load', () => {
 
     // Acceder a la API de Tidio para enviar y recibir mensajes
     window.TidioChatApi = window.TidioChatApi || {};
+
+    // Asegurarse de que la API de Tidio está cargada correctamente
+    if (window.TidioChatApi) {
+        console.log('Tidio API cargada correctamente.');
+    } else {
+        console.error('Error: La API de Tidio no se ha cargado correctamente.');
+    }
 
     // Función para mostrar los mensajes en la ventana del chat
     window.TidioChatApi.onMessage = function (data) {
@@ -39,6 +45,13 @@ window.addEventListener('load', () => {
 
             // Enviar el mensaje a Tidio
             window.TidioChatApi.sendMessage(userMessage);
+
+            // Enviar un mensaje de espera mientras Tidio responde
+            const waitingMessage = document.createElement('div');
+            waitingMessage.classList.add('chat-message');
+            waitingMessage.textContent = 'Esperando respuesta...';
+            chatWindow.appendChild(waitingMessage);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
         }
     });
 
