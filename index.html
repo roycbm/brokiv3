@@ -11,18 +11,6 @@
         body {
             font-family: 'Roboto', sans-serif;
         }
-
-        #tidio-chat {
-            display: none !important;
-        }
-
-        .chat-message {
-            background-color: #4A5568;
-            color: white;
-            padding: 8px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body class="bg-gray-900 text-white">
@@ -32,9 +20,17 @@
                 <h1 class="text-2xl font-bold">Broki - Aprende Inglés</h1>
             </div>
             <div class="p-4">
-                <div id="chat-window" class="h-96 overflow-y-scroll border border-gray-700 p-2 mb-4 bg-gray-700">
-                    <!-- Los mensajes del chatbot aparecerán aquí -->
+                <!-- Área de mensajes del chat -->
+                <div id="chat-window" class="h-96 overflow-y-scroll border border-gray-700 p-2 mb-4 bg-gray-700" style="display:none;">
+                    <!-- Aquí se van a mostrar los mensajes -->
                 </div>
+
+                <!-- Formulario para ingresar correo -->
+                <div id="email-form" class="mb-4">
+                    <input id="user-email" type="email" class="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" placeholder="Ingresa tu correo para comenzar..." required>
+                    <button id="start-chat" class="bg-blue-500 text-white p-2 mt-2 rounded">Iniciar Chat</button>
+                </div>
+
                 <div class="flex justify-center space-x-4 mb-4">
                     <button id="voice-button" class="bg-blue-500 text-white p-2 rounded-full" aria-label="Activar micrófono">
                         <i id="voice-icon" class="fas fa-microphone"></i>
@@ -43,60 +39,16 @@
                         <i class="fas fa-keyboard"></i>
                     </button>
                 </div>
+
                 <div>
-                    <textarea id="text-input" class="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" placeholder="Escribe tu mensaje..." rows="5"></textarea>
-                    <button id="send-button" class="bg-blue-500 text-white p-2 rounded mt-2">Enviar</button>
+                    <textarea id="text-input" class="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" placeholder="Escribe tu mensaje..." rows="5" readonly></textarea>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
     <!-- Script de Tidio para el chat -->
     <script src="//code.tidio.co/kkosnybeqsimkd8ow5dcncotpjy89n11.js" async></script>
-    <script>
-        // Asegúrate de que el script de Tidio esté cargado correctamente
-        window.addEventListener('load', () => {
-            // Ocultar el widget de Tidio
-            const tidioChat = document.getElementById('tidio-chat');
-            if (tidioChat) tidioChat.style.display = 'none';
-
-            // Acceder a la API de Tidio para enviar un mensaje
-            window.TidioChatApi = window.TidioChatApi || {};
-            window.TidioChatApi.onMessage = function (data) {
-                const chatWindow = document.getElementById('chat-window');
-                const message = document.createElement('div');
-                message.classList.add('chat-message');
-                message.textContent = data.text; // El texto del mensaje de Tidio
-                chatWindow.appendChild(message);
-                chatWindow.scrollTop = chatWindow.scrollHeight; // Desplazar hacia abajo
-            };
-
-            // Enviar un mensaje cuando el usuario presione el botón
-            const sendButton = document.getElementById('send-button');
-            const textInput = document.getElementById('text-input');
-            
-            sendButton.addEventListener('click', () => {
-                const userMessage = textInput.value;
-                if (userMessage.trim()) {
-                    // Muestra el mensaje en el área del chat
-                    const chatWindow = document.getElementById('chat-window');
-                    const message = document.createElement('div');
-                    message.classList.add('chat-message');
-                    message.textContent = userMessage;
-                    chatWindow.appendChild(message);
-
-                    // Desplazar hacia abajo
-                    chatWindow.scrollTop = chatWindow.scrollHeight;
-                    
-                    // Limpiar el campo de texto
-                    textInput.value = '';
-
-                    // Enviar el mensaje a Tidio
-                    window.TidioChatApi.sendMessage(userMessage);
-                }
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
