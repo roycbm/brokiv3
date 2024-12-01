@@ -13,15 +13,36 @@ window.addEventListener('load', () => {
         console.error('Error: La API de Tidio no se ha cargado correctamente.');
     }
 
-    // Función para mostrar los mensajes en la ventana del chat
-    window.TidioChatApi.onMessage = function (data) {
-        const chatWindow = document.getElementById('chat-window');
-        const message = document.createElement('div');
-        message.classList.add('chat-message');
-        message.textContent = data.text; // El texto del mensaje de Tidio
-        chatWindow.appendChild(message);
-        chatWindow.scrollTop = chatWindow.scrollHeight; // Desplazar hacia abajo
-    };
+    // Manejo del formulario de correo
+    const emailForm = document.getElementById('email-form');
+    const userEmail = document.getElementById('user-email');
+    const startChatButton = document.getElementById('start-chat');
+
+    startChatButton.addEventListener('click', () => {
+        const email = userEmail.value;
+
+        if (email && validateEmail(email)) {
+            // Esconde el formulario de correo y muestra el chat
+            emailForm.style.display = 'none';
+            document.getElementById('chat-window').style.display = 'block';
+
+            // Configura el correo electrónico en la API de Tidio
+            window.TidioChatApi.setVisitorData({
+                email: email
+            });
+
+            // Envía un mensaje de bienvenida
+            window.TidioChatApi.sendMessage('Hola, ¿en qué puedo ayudarte hoy?');
+        } else {
+            alert('Por favor, ingresa un correo electrónico válido.');
+        }
+    });
+
+    // Función para validar el formato del correo electrónico
+    function validateEmail(email) {
+        const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return re.test(email);
+    }
 
     // Función para manejar el envío de mensajes del usuario
     const sendButton = document.getElementById('send-button');
