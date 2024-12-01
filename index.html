@@ -21,13 +21,13 @@
             </div>
             <div class="p-4">
                 <!-- Área de mensajes del chat -->
-                <div id="chat-window" class="h-96 overflow-y-scroll border border-gray-700 p-2 mb-4 bg-gray-700" style="display:none;">
+                <div id="chat-window" class="h-96 overflow-y-scroll border border-gray-700 p-2 mb-4 bg-gray-700" style="display:block;">
                     <!-- Aquí se van a mostrar los mensajes -->
                 </div>
 
-                <!-- Formulario para ingresar correo -->
-                <div id="email-form" class="mb-4">
-                    <input id="user-email" type="email" class="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" placeholder="Ingresa tu correo para comenzar..." required>
+                <!-- Formulario para ingresar correo (predefinido) -->
+                <div id="email-form" class="mb-4" style="display:none;">
+                    <input id="user-email" type="email" class="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" value="renacuajo@gmail.com" readonly>
                     <button id="start-chat" class="bg-blue-500 text-white p-2 mt-2 rounded">Iniciar Chat</button>
                 </div>
 
